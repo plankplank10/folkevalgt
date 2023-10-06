@@ -1,0 +1,33 @@
+.person-avatar {
+  /* border: 1px solid rgba(0, 0, 0, 0.2); */
+  /* width: 100px; */
+  margin-bottom: 10px;
+  margin-left: 10px;
+  padding-top: 5px;
+  border-radius: 5px;
+  /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+  display: block;
+}
+
+.person-avatar-img-wrapper {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  border: 1px solid #44444483;
+  margin: auto;
+  overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  display: block;
+}
+
+.person-avatar-img {
+  width: 100%;
+}
+
+p {
+  font-weight: 500;
+  font-size: 0.8rem;
+  margin: 0 5px;
+  text-decoration: none;
+  color: black;
+}

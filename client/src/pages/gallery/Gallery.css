@@ -1,0 +1,8 @@
+.person-gallery {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin: auto;
+}

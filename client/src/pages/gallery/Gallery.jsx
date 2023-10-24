@@ -18,7 +18,9 @@ export default function Gallery() {
         ></GalleryItem>
       );
     });
-    setPersonGallery(<div className="person-gallery">{gallery}</div>);
+    setPersonGallery(
+      <div className="flex justify-between flex-wrap">{gallery}</div>
+    );
   };
 
   useEffect(() => {
@@ -31,7 +33,7 @@ export default function Gallery() {
   return (
     <div>
       <Header />
-      <div className="container mx-auto pt-14">
+      <div className="container mx-auto">
         {personGallery ? personGallery : "Loading..."}
       </div>
     </div>

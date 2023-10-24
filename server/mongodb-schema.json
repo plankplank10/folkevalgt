@@ -1,0 +1,276 @@
+
+// person
+{
+    "person_id": "JGS",
+    "fornavn": "Jonas Gahr",
+    "etternavn": "Støre",
+    "kjoenn": 2,
+    "foedselsdato": "-295149600000",
+    "doedsdato": null,
+    "parti": {
+        "parti_id": "A"
+    },
+    "ansiennitet_aar": 14,
+    "ansiennitet_dager": 6,
+    "foede_fylke": "Oslo",
+    "foede_kommune": "Oslo",
+    "foreldre": {
+        "far":{
+            "doedsaar": 2017,
+            "etternavn": "Støre",
+            "foedselsaar": 1925,
+            "fornavn": "Ulf Jonas",
+            "stilling": "skipsmegler"
+        },
+        "mor":{
+            "doedsaar": 2021,
+            "etternavn": "Gahr",
+            "foedselsaar": 1931,
+            "fornavn": "Unni",
+            "stilling": "husmor"
+        }
+    },
+    "stortingsperioder": [
+        {
+            "fra_dato": "-295149600000",
+            "til_dato": "-295149600000",
+            "parti_id": "A",
+            "verv": "Representant",
+            "representantnummer": 1,
+            "stortingsperiode_id": "2021-2025"
+            // Sjekke med data.stortinget.no#Representanter for å verifisere om en vara faktisk var på stortinget
+        }
+    ],
+    "permisjon": [
+        {
+            "fra_dato": "/Date(1254348000000+0200)/",
+            "fravaer_grunn": "REGJ",
+            "til_dato": "/Date(1380492000000+0200)/",
+            "type": "BORTE",
+            "vara_etternavn": "Wickholm",
+            "vara_fornavn": "Truls"
+            }
+    ],
+    "litteratur": [
+        {
+            "aar": 2008,
+            "beskrivelse": null,
+            "etternavn": "Støre",
+            "flere_aar": "2008",
+            "forfatter": "Støre, Jonas Gahr",
+            "forlag": "Cappelen Damm",
+            "fornavn": "Jonas Gahr",
+            "sted": "Oslo",
+            "tittel": "Å gjøre en forskjell: refleksjoner fra en norsk utenriksminister",
+            "type": "Forfatter"
+        }            
+    ],
+    "verv_regjering": [
+        {
+            "fra_aar": 2005,
+            "fra_dato": "/Date(1129500000000+0200)/",
+            "komite_kode": "REGJ",
+            "komite_navn": "Utenriksdepartementet",
+            "komite_type": "REGJ",
+            "sortering": 99,
+            "stortingsperiode_id": null,
+            "til_aar": 2012,
+            "til_dato": "/Date(1348178400000+0200)/",
+            "verv": "Utenriksminister"
+            }
+    ],
+    "verv_fagkomite": [
+        {
+            "fra_aar": 2013,
+            "fra_dato": "/Date(1382392800000+0200)/",
+            "komite_kode": "FINANS",
+            "komite_navn": "Finanskomiteen",
+            "komite_type": "FAG",
+            "sortering": 1,
+            "stortingsperiode_id": "2013-2017",
+            "til_aar": 2014,
+            "til_dato": "/Date(1403128800000+0200)/",
+            "verv": "Første nestleder"
+        }            
+    ],
+    "verv_komite": [
+        {
+            "fra_aar": 2017,
+            "fra_dato": "/Date(1507759200000+0200)/",
+            "komite_kode": "UUFK",
+            "komite_navn": "Den utvidede utenriks- og forsvarskomité",
+            "komite_type": "KOMI",
+            "sortering": 1,
+            "stortingsperiode_id": "2017-2021",
+            "til_aar": 2021,
+            "til_dato": "/Date(1633039140000+0200)/",
+            "verv": "Medlem"
+        }
+    ],
+    "verv_saerskilt_komite": [
+        {
+            "fra_aar": 2020,
+            "fra_dato": "/Date(1584313200000+0100)/",
+            "komite_kode": "KOR",
+            "komite_navn": "Den særskilte komité for å behandle spesielle saker vedrørende korona-krisen",
+            "komite_type": "SKS",
+            "sortering": 4,
+            "stortingsperiode_id": "2017-2021",
+            "til_aar": 2020,
+            "til_dato": "/Date(1584572340000+0100)/",
+            "verv": "Medlem"
+        }
+    ],
+    "verv_parti": [
+        {
+            "fra_aar": 2014,
+            "fra_dato": "/Date(1403042400000+0200)/",
+            "komite_kode": "A",
+            "komite_navn": "Arbeiderpartiet",
+            "komite_type": "PART",
+            "sortering": 5,
+            "stortingsperiode_id": "2013-2017",
+            "til_aar": 2017,
+            "til_dato": "/Date(1506808740000+0200)/",
+            "verv": "Leder gruppestyret"
+            }
+    ],
+    "verv_eoes": [
+        {
+            "fra_aar": -1,
+            "fra_dato": "/Date(1403128800000+0200)/",
+            "komite_kode": "EØS",
+            "komite_navn": "Europautvalget",
+            "komite_type": "EØS",
+            "sortering": 3,
+            "stortingsperiode_id": "2013-2017",
+            "til_aar": -1,
+            "til_dato": "/Date(1506808740000+0200)/",
+            "verv": "Medlem"
+            }
+    ],
+    "verv_delegasjon": [
+        {
+            "fra_aar": -1,
+            "fra_dato": "/Date(1450306800000+0100)/",
+            "komite_kode": "EUROPAR",
+            "komite_navn": "Stortingets delegasjon for forbindelser med Europaparlamentet",
+            "komite_type": "DELE",
+            "sortering": 3,
+            "stortingsperiode_id": "2013-2017",
+            "til_aar": -1,
+            "til_dato": "/Date(1506794400000+0200)/",
+            "verv": "Medlem"
+            }
+    ],
+    "verv_andre": [
+        {
+            "fra_aar": 2014,
+            "fra_aar_ukjent": false,
+            "merknad": null,
+            "nivaa": 60,
+            "organisasjon": "Global Action Group on the Arctic, World Economic Forum",
+            "sted": null,
+            "til_aar": -1,
+            "til_aar_ukjent": true,
+            "type": "offentlig",
+            "verv": null
+            }
+    ],
+    "utdanning": [
+        {
+            "flere_perioder_tekst": null,
+            "fra_aar": 1976,
+            "fra_aar_ukjent": false,
+            "merknad": null,
+            "navn": "Berg videregående skole",
+            "til_aar": 1979,
+            "til_aar_ukjent": false,
+            "type": "10"
+            }
+    ],
+    "yrkeserfaring": [
+        {
+            "flere_perioder_tekst": null,
+            "fra_aar": 1980,
+            "fra_aar_ukjent": false,
+            "merknad": null,
+            "navn": "Fenrik i Kgl. Norske marine",
+            "til_aar": 1981,
+            "til_aar_ukjent": false,
+            "type": "20"
+            }
+    ],
+    "annen_aktivitet": [
+
+    ],
+    "utmerkelser": [
+        {
+            "flere_perioder_tekst": null,
+            "fra_aar": 2013,
+            "fra_aar_ukjent": false,
+            "merknad": null,
+            "navn": "Willy Brandt-prisen",
+            "til_aar": -1,
+            "til_aar_ukjent": true,
+            "type": "40"
+            }
+    ]
+}
+
+
+// metadata
+{
+    "sesjoner": [
+        {
+            "fra": "/Date(1633039200000+0200)/",
+            "id": "2023-2024",
+            "til": "/Date(1759269540000+0200)/",
+        }
+    ],
+    "innevaerende_sesjon": {
+
+    }
+}
+
+// parti
+{
+    "parti_id": "A",
+    "navn": "Arbeiderpartiet",
+    "representerte_stortingsperioder": [
+        "2017-2021",
+        "2021-2025"
+    ]
+
+}
+
+
+// valgdistrikt
+{
+    "valgdistrikt_id": "AA",
+    "navn": "Aust-Agder"
+}
+
+// komite
+
+{
+    "komite_id": "ARBSOS",
+    "navn": "Arbeids- og sosialkomiteen",
+    "aktive_sesjoner": [
+        "2023-2024",
+        "2024-2025",
+        [...]
+    ]
+}
+
+// delegasjon
+
+{
+    "delegasjon_id": "EUROPAR",
+    "navn": "Stortingets delegasjon for forbindelser med Europaparlamentet",
+    "aktive_sesjoner": [
+        "2023-2024",
+        "2024-2025",
+        [...]
+    ]
+}

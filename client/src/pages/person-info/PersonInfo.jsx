@@ -127,69 +127,69 @@ export default function PersonInfo() {
       });
 
     return (
-      <div>
-        <Header />
-        <div className="w-2/3 m-auto pt-16">
-          <div className="mb-2 flex items-end border-b-2 overflow-hidden">
-            <div className="overflow-hidden rounded-t-3xl">
-              <img
-                src={personData.avatarURL}
-                alt={personData.fornavn + " " + personData.etternavn}
-              ></img>
-            </div>
-            <div className="ml-4 mb-4 text-left">
-              <h1 className="font-os text-3xl antialiased font-semibold">
-                {personData.fornavn + " " + personData.etternavn}
-              </h1>
-              <h2 className="font-os text-lg font-normal">
-                {current_parliamentary_period.parti_id}
-              </h2>
-              <h2 className="font-os text-sm text-slate-600 sub font-normal">
-                {current_parliamentary_period.fylke}
-              </h2>
-            </div>
+      <div className="w-2/3 m-auto">
+        <div className="mb-2 flex items-end border-b-2 overflow-hidden">
+          <div className="overflow-hidden rounded-t-3xl">
+            <img
+              src={personData.avatarURL}
+              alt={personData.fornavn + " " + personData.etternavn}
+            ></img>
           </div>
-
-          <div className="flex justify-around mb-5">
-            <Link to="voteringer">
-              <div className="rounded-3xl bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 p-2 flex content-center items-center">
-                <div className="font-os font-bold text-sm text-white">
-                  Voteringshistorikk
-                </div>
-              </div>
-            </Link>
-
-            <Link to="saker">
-              <div className="rounded-3xl bg-violet-500 hover:bg-violet-600 active:bg-violet-700 p-2 flex content-center items-center">
-                <div className="font-os font-bold text-sm text-white">
-                  Saker
-                </div>
-              </div>
-            </Link>
-
-            <Link to="taleaktivitet">
-              <div className="rounded-3xl bg-blue-500 hover:bg-blue-600 active:bg-blue-700 p-2 flex content-center items-center">
-                <div className="font-os font-bold text-sm text-white">
-                  Taleaktivitet
-                </div>
-              </div>
-            </Link>
+          <div className="ml-4 mb-4 text-left">
+            <h1 className="font-os text-3xl antialiased font-semibold">
+              {personData.fornavn + " " + personData.etternavn}
+            </h1>
+            <h2 className="font-os text-lg font-normal">
+              {current_parliamentary_period.parti_id}
+            </h2>
+            <h2 className="font-os text-sm text-slate-600 sub font-normal">
+              {current_parliamentary_period.fylke}
+            </h2>
           </div>
-          <p>{foedt}</p>
-          <p>{age}</p>
-
-          <p>{seniority}</p>
-
-          <h3>Stortingsperioder:</h3>
-          <ul>{parliamentary_periods}</ul>
-          <h3>Utdanning:</h3>
-          <ul>{education}</ul>
-          <h3>Yrkeserfaring:</h3>
-          <ul>{workExperience}</ul>
         </div>
+
+        <div className="flex justify-around mb-5">
+          <Link to="voteringer">
+            <div className="rounded-3xl bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 p-2 flex content-center items-center">
+              <div className="font-os font-bold text-sm text-white">
+                Voteringshistorikk
+              </div>
+            </div>
+          </Link>
+
+          <Link to="saker">
+            <div className="rounded-3xl bg-violet-500 hover:bg-violet-600 active:bg-violet-700 p-2 flex content-center items-center">
+              <div className="font-os font-bold text-sm text-white">Saker</div>
+            </div>
+          </Link>
+
+          <Link to="taleaktivitet">
+            <div className="rounded-3xl bg-blue-500 hover:bg-blue-600 active:bg-blue-700 p-2 flex content-center items-center">
+              <div className="font-os font-bold text-sm text-white">
+                Taleaktivitet
+              </div>
+            </div>
+          </Link>
+        </div>
+        <p>{foedt}</p>
+        <p>{age}</p>
+
+        <p>{seniority}</p>
+
+        <h3>Stortingsperioder:</h3>
+        <ul>{parliamentary_periods}</ul>
+        <h3>Utdanning:</h3>
+        <ul>{education}</ul>
+        <h3>Yrkeserfaring:</h3>
+        <ul>{workExperience}</ul>
       </div>
     );
   };
 
-  return <div>{personData ? generatePersonView() : <p>Loading...</p>}</div>;
+  return (
+    <div>
+      <Header />
+      {personData ? generatePersonView() : <p>Loading...</p>}
+    </div>
+  );
 }

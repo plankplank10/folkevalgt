@@ -12,6 +12,8 @@ export default function PersonInfo() {
   const formatDate = (date) => {
     if (typeof date === "string") {
       date = new Date(parseInt(date.substring(6)));
+    } else if (typeof date === "number") {
+      date = new Date(date);
     }
     return date.toLocaleDateString("nb-NO", {
       year: "numeric",
@@ -28,7 +30,7 @@ export default function PersonInfo() {
     return age;
   };
   useEffect(() => {
-    fetch("http://192.168.86.22:3001/api/person?personId=" + personId)
+    fetch("http://localhost:3001/api/person?personId=" + personId)
       .then((response) => response.json())
       .then((response) => setPersonData(response))
       .catch((error) => console.error(error));
@@ -39,37 +41,29 @@ export default function PersonInfo() {
       return <div>Ugyldig person ID</div>;
     }
 
+    let current_parliamentary_period = personData.stortingsperioder.find(
+      (el) => el.stortingsperiode_id === "2021-2025"
+    );
+
     // Title
     let title = personData.fornavn + " " + personData.etternavn;
-    let current_parliamentary_period =
-      personData.biografi.stortingsperiode_kodet_liste.find(
-        (el) => el.stortingsperiode_id === "2021-2025"
-      );
-    if (current_parliamentary_period) {
-      title += " (" + current_parliamentary_period.parti_id + ")";
-    }
+    if (personData.parti_id != null) title += ` (${personData.parti_id})`;
 
     // Date of birth
     let foedt = "Født: " + formatDate(personData.foedselsdato);
-    if (personData.biografi.personalia_kodet.foede_kommune)
+    if (personData.foede_kommune)
       foedt +=
-        " (" +
-        personData.biografi.personalia_kodet.foede_kommune +
-        ", " +
-        personData.biografi.personalia_kodet.foede_fylke +
-        ")";
+        " (" + personData.foede_kommune + ", " + personData.foede_fylke + ")";
 
     // Age
-    let age =
-      "Alder: " +
-      getAge(new Date(parseInt(personData.foedselsdato.substring(6))));
+    let age = "Alder: " + getAge(new Date(personData.foedselsdato));
 
     // Seniority
     let seniority =
       "Ansiennitet: " +
-      personData.biografi.personalia_kodet.ansiennitet_aar +
+      personData.ansiennitet_aar +
       " år, " +
-      personData.biografi.personalia_kodet.ansiennitet_dager +
+      personData.ansiennitet_dager +
       " dager";
 
     // Komiteer
@@ -77,54 +71,44 @@ export default function PersonInfo() {
 
     // Parliamentary Periods
     let parliamentary_periods = [];
-    personData.biografi.stortingsperiode_kodet_liste
-      .reverse()
-      .forEach((parliamentary_period) => {
-        parliamentary_periods.push(
-          <li>
-            {parliamentary_period.verv +
-              " nr " +
-              parliamentary_period.representantnummer +
-              " for " +
-              parliamentary_period.fylke +
-              ", " +
-              parliamentary_period.stortingsperiode_id +
-              ", " +
-              parliamentary_period.parti_id}
-          </li>
-        );
-      });
+    personData.stortingsperioder.reverse().forEach((parliamentary_period) => {
+      parliamentary_periods.push(
+        <li>
+          {parliamentary_period.verv +
+            " nr " +
+            parliamentary_period.representantnummer +
+            " for " +
+            parliamentary_period.fylke +
+            ", " +
+            parliamentary_period.stortingsperiode_id +
+            ", " +
+            parliamentary_period.parti_id}
+        </li>
+      );
+    });
 
     // Education
     let education = [];
-    personData.biografi.utdanning_yrke_kodet_liste
-      .filter((el) => el.type === "10")
-      .reverse()
-      .forEach((el) => {
-        let fromYear = el.fra_aar_ukjent ? "Ukjent" : el.fra_aar;
-        let toYear = el.til_aar_ukjent ? "Ukjent" : el.til_aar;
+    personData.utdanning.reverse().forEach((el) => {
+      let fromYear = el.fra_aar_ukjent ? "Ukjent" : el.fra_aar;
+      let toYear = el.til_aar_ukjent ? "Ukjent" : el.til_aar;
 
-        education.push(
-          <li>{el.navn + " (" + fromYear + "-" + toYear + ")"}</li>
-        );
-      });
+      education.push(<li>{el.navn + " (" + fromYear + "-" + toYear + ")"}</li>);
+    });
 
     // Work Experience
     let workExperience = [];
-    personData.biografi.utdanning_yrke_kodet_liste
-      .filter((el) => el.type === "20")
-      .reverse()
-      .forEach((el) => {
-        let fromYear = el.fra_aar_ukjent ? "Ukjent" : el.fra_aar;
-        let toYear = el.til_aar_ukjent ? "Ukjent" : el.til_aar;
+    personData.yrkeserfaring.reverse().forEach((el) => {
+      let fromYear = el.fra_aar_ukjent ? "Ukjent" : el.fra_aar;
+      let toYear = el.til_aar_ukjent ? "Ukjent" : el.til_aar;
 
-        let comment = "";
-        if (el.merknad) comment = " [" + el.merknad + "]";
+      let comment = "";
+      if (el.merknad) comment = " [" + el.merknad + "]";
 
-        workExperience.push(
-          <li>{el.navn + comment + " (" + fromYear + "-" + toYear + ")"}</li>
-        );
-      });
+      workExperience.push(
+        <li>{el.navn + comment + " (" + fromYear + "-" + toYear + ")"}</li>
+      );
+    });
 
     return (
       <div className="w-2/3 m-auto">
@@ -140,7 +124,7 @@ export default function PersonInfo() {
               {personData.fornavn + " " + personData.etternavn}
             </h1>
             <h2 className="font-os text-lg font-normal">
-              {current_parliamentary_period.parti_id}
+              {personData.parti_id}
             </h2>
             <h2 className="font-os text-sm text-slate-600 sub font-normal">
               {current_parliamentary_period.fylke}

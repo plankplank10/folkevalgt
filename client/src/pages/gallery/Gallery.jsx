@@ -5,12 +5,14 @@ import Header from "../../components/header/Header";
 
 export default function Gallery() {
   const [personGallery, setPersonGallery] = useState(null);
+  const [period, setPeriod] = useState(null);
 
   const generateGallery = (data) => {
     let gallery = [];
     data.forEach((element) => {
       gallery.push(
         <GalleryItem
+          key={element.id} // TODO Change to _id when using mongo
           element={element}
           avatarURL={element.avatarURL}
           fornavn={element.fornavn}
@@ -24,7 +26,7 @@ export default function Gallery() {
   };
 
   useEffect(() => {
-    fetch("http://192.168.86.22:3001/api/folkevalgte")
+    fetch("http://localhost:3001/api/folkevalgte")
       .then((response) => response.json())
       .then((json) => generateGallery(json))
       .catch((error) => console.error(error));

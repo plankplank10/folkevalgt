@@ -10,6 +10,7 @@ const readline = require("readline").createInterface({
   output: process.stdout,
 });
 const cacher = require("./cacher");
+const api = require("./api");
 
 const PORT = process.env.PORT || 3001;
 
@@ -30,9 +31,10 @@ cacher
     options.mongodbPort,
     options.mongodbDatabase
   )
-  .then((connection) => {
+  .then((client) => {
     startReadConsole();
     startExpress();
+    api.passClient(client);
   })
   .catch((err) => {
     console.log(err);
@@ -51,7 +53,6 @@ const startReadConsole = async () => {
 
   const userRes = await readLineAsync("");
   let args = userRes.split(" ");
-  //readline.close();
   if (args[0] == "cache") {
     let done = false;
     if (args.length > 1) {
@@ -76,68 +77,12 @@ const startReadConsole = async () => {
 const startExpress = () => {
   console.log("[Express.js] Starting server...");
   const app = express();
-  app.get("/api/folkevalgte", (req, res) => {
+  app.get("/api/folkevalgte", api.handleRepresentativeList);
+
+  app.get("/api/person", api.handlePersonInfo);
+
+  app.get("/api/parliamentaryperiods", (req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
-    console.log("Connection");
-    axios
-      .get(
-        "https://data.stortinget.no/eksport/dagensrepresentanter?format=json"
-      )
-      .then((response) => {
-        let list = [];
-
-        response.data.dagensrepresentanter_liste.forEach((el) => {
-          komiteer_liste = el.komiteer_liste;
-          if (komiteer_liste != null)
-            komiteer_liste = komiteer_liste.map((x) => {
-              return { id: x.id, navn: x.navn };
-            });
-
-          fast_vara = null;
-          if (el.fast_vara != null)
-            fast_vara = {
-              id: el.fast_vara.id,
-              fornavn: el.fast_vara.fornavn,
-              etternavn: el.fast_vara.etternavn,
-            };
-
-          list.push({
-            id: el.id,
-            fornavn: el.fornavn,
-            etternavn: el.etternavn,
-            epost: el.epost,
-            kjoenn: el.kjoenn == 1 ? "Kvinne" : "Mann",
-            foedselsdato: el.foedselsdato,
-            parti: {
-              id: el.parti.id,
-              navn: el.parti.navn,
-            },
-            valgdistrikt: {
-              id: el.fylke.id,
-              navn: el.fylke.navn,
-            },
-            komiteer: komiteer_liste,
-            vara_representant: el.vara_representant,
-            fast_vara: fast_vara,
-            avatarURL:
-              "https://data.stortinget.no/eksport/personbilde?personid=" +
-              el.id +
-              "&storrelse=middels&erstatningsbilde=true",
-          });
-        });
-
-        res.json(list);
-      });
-  });
-
-  app.get("/api/person", (req, res) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-
-    if (req.query.personId == undefined) {
-      res.status(400);
-      res.json({ message: "Parameter 'personId' is required" });
-      return;
-    }
 
     axios
       .get(

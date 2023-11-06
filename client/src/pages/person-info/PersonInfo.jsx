@@ -41,9 +41,8 @@ export default function PersonInfo() {
       return <div>Ugyldig person ID</div>;
     }
 
-    let current_parliamentary_period = personData.stortingsperioder.find(
-      (el) => el.stortingsperiode_id === "2021-2025"
-    );
+    let latest_parliamentary_period =
+      personData.stortingsperioder[personData.stortingsperioder.length - 1];
 
     // Title
     let title = personData.fornavn + " " + personData.etternavn;
@@ -127,7 +126,7 @@ export default function PersonInfo() {
               {personData.parti_id}
             </h2>
             <h2 className="font-os text-sm text-slate-600 sub font-normal">
-              {current_parliamentary_period.fylke}
+              {latest_parliamentary_period.fylke}
             </h2>
           </div>
         </div>

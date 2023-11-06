@@ -11,7 +11,47 @@ const passClient = (client) => {
 
 const handleRepresentativeList = async (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
-  console.log("Connection");
+
+  if (req.query.period != undefined && req.query.period != "current") {
+    let document_representatives = await MONGO.db(DEFAULT_DB)
+      .collection("personer")
+      .find({
+        stortingsperioder: {
+          $elemMatch: { stortingsperiode_id: req.query.period },
+        },
+      })
+      .toArray(function (err, result) {
+        if (err) throw err;
+        console.log(result);
+        db.close();
+      });
+
+    document_representatives = document_representatives.map((rep) => {
+      let period_info = rep.stortingsperioder.find(
+        (el) => el.stortingsperiode_id == req.query.period
+      );
+      return {
+        _id: rep._id,
+        cache_date: rep.cache_date,
+        fornavn: rep.fornavn,
+        etternavn: rep.etternavn,
+        avatarURL:
+          "https://data.stortinget.no/eksport/personbilde?personid=" +
+          rep._id +
+          "&storrelse=middels&erstatningsbilde=true",
+        parti: { id: period_info.parti_id },
+        valgdistrikt: { navn: period_info.fylke },
+      };
+    });
+
+    res.json({
+      dagens_storting: false,
+      representatives: document_representatives,
+    });
+
+    return;
+  }
+
   axios
     .get("https://data.stortinget.no/eksport/dagensrepresentanter?format=json")
     .then((response) => {
@@ -36,12 +76,12 @@ const handleRepresentativeList = async (req, res) => {
           };
 
         list.push({
-          id: el.id,
+          _id: el.id,
           fornavn: el.fornavn,
           etternavn: el.etternavn,
-          epost: el.epost,
-          kjoenn: el.kjoenn == 1 ? "Kvinne" : "Mann",
-          foedselsdato: el.foedselsdato,
+          //epost: el.epost,
+          //kjoenn: el.kjoenn == 1 ? "Kvinne" : "Mann",
+          //foedselsdato: el.foedselsdato,
           parti: {
             id: el.parti.id,
             navn: el.parti.navn,
@@ -50,9 +90,9 @@ const handleRepresentativeList = async (req, res) => {
             id: el.fylke.id,
             navn: el.fylke.navn,
           },
-          komiteer: komiteer_liste,
-          vara_representant: el.vara_representant,
-          fast_vara: fast_vara,
+          //komiteer: komiteer_liste,
+          //vara_representant: el.vara_representant,
+          //fast_vara: fast_vara,
           avatarURL:
             "https://data.stortinget.no/eksport/personbilde?personid=" +
             el.id +
@@ -60,7 +100,7 @@ const handleRepresentativeList = async (req, res) => {
         });
       });
 
-      res.json(list);
+      res.json({ dagens_storting: true, representatives: list });
     });
 };
 
@@ -77,8 +117,6 @@ const handlePersonInfo = async (req, res) => {
     _id: req.query.personId,
   });
 
-  console.log(document);
-
   if (document == null) {
     res.status(400);
     res.json({ errorCode: 101, message: "Ugyldig personId" });
@@ -90,46 +128,17 @@ const handlePersonInfo = async (req, res) => {
     document._id +
     "&storrelse=middels&erstatningsbilde=true";
   res.json(document);
+};
 
-  /* axios
-    .get(
-      "https://data.stortinget.no/eksport/person?format=json&personid=" +
-        req.query.personId
-    )
-    .then((personResponse) => {
-      axios
-        .get(
-          "https://data.stortinget.no/eksport/kodetbiografi?format=json&personid=" +
-            req.query.personId
-        )
-        .then((biographyResponse) => {
-          let data = personResponse.data;
-          data.biografi = biographyResponse.data;
-          data.avatarURL =
-            "https://data.stortinget.no/eksport/personbilde?personid=" +
-            data.id +
-            "&storrelse=middels&erstatningsbilde=true";
-
-          console.log(
-            new Date(parseInt(data.foedselsdato.substr(6))).toString()
-          );
-
-          res.json(personResponse.data);
-        });
-    })
-    .catch((error) => {
-      if (error.response.status === 500) {
-        res.status(400);
-        res.json({ errorCode: 101, message: "Ugyldig personId" });
-      } else {
-        res.status(500);
-        res.json({ message: "Error", error: error });
-      }
-    }); */
+const handleMetadata = async (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  let document = await MONGO.db(DEFAULT_DB).collection("metadata").findOne();
+  res.json(document);
 };
 
 module.exports = {
   handleRepresentativeList,
   handlePersonInfo,
+  handleMetadata,
   passClient,
 };

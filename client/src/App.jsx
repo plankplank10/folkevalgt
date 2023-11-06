@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Gallery from "./pages/gallery/Gallery";
 import PersonInfo from "./pages/person-info/PersonInfo";
@@ -6,19 +6,16 @@ import Header from "./components/header/Header";
 import { useEffect, useState } from "react";
 
 function App() {
-  const [parliamentaryPeriods, setParliamentaryPeriods] = useState([]);
-
-  useEffect(() => {
-    fetch("http://localhost:3001/api/parliamentaryperiods")
-      .then((response) => response.json())
-      .then((json) => {})
-      .catch((error) => console.error(error));
-  });
   return (
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Gallery />}></Route>
+          <Route
+            path="/"
+            element={<Navigate to="/gallery/"></Navigate>}
+          ></Route>
+          <Route path="/gallery/:period" element={<Gallery />}></Route>
+          <Route path="/gallery/" element={<Gallery />}></Route>
           <Route path="/person/:personId" element={<PersonInfo />}></Route>
           <Route
             path="*"

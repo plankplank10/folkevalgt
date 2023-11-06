@@ -77,49 +77,11 @@ const startReadConsole = async () => {
 const startExpress = () => {
   console.log("[Express.js] Starting server...");
   const app = express();
-  app.get("/api/folkevalgte", api.handleRepresentativeList);
+  app.get("/api/representanter", api.handleRepresentativeList);
 
   app.get("/api/person", api.handlePersonInfo);
 
-  app.get("/api/parliamentaryperiods", (req, res) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-
-    axios
-      .get(
-        "https://data.stortinget.no/eksport/person?format=json&personid=" +
-          req.query.personId
-      )
-      .then((personResponse) => {
-        axios
-          .get(
-            "https://data.stortinget.no/eksport/kodetbiografi?format=json&personid=" +
-              req.query.personId
-          )
-          .then((biographyResponse) => {
-            let data = personResponse.data;
-            data.biografi = biographyResponse.data;
-            data.avatarURL =
-              "https://data.stortinget.no/eksport/personbilde?personid=" +
-              data.id +
-              "&storrelse=middels&erstatningsbilde=true";
-
-            console.log(
-              new Date(parseInt(data.foedselsdato.substr(6))).toString()
-            );
-
-            res.json(personResponse.data);
-          });
-      })
-      .catch((error) => {
-        if (error.response.status === 500) {
-          res.status(400);
-          res.json({ errorCode: 101, message: "Ugyldig personId" });
-        } else {
-          res.status(500);
-          res.json({ message: "Error", error: error });
-        }
-      });
-  });
+  app.get("/api/metadata", api.handleMetadata);
 
   app.listen(PORT, () => {
     console.log(`[Express.js] Server listening on port ${PORT}`);

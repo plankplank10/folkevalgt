@@ -15,17 +15,17 @@ export default function Header() {
                   Storting
                 </li>
               </Link>
-              <Link to="regjering">
+              <Link to="/regjering">
                 <li className="hover:text-sky-400 active:text-sky-600">
                   Regjering
                 </li>
               </Link>
-              <Link to="representanter">
+              <Link to="/representanter">
                 <li className="hover:text-sky-400 active:text-sky-600">
                   Representanter
                 </li>
               </Link>
-              <Link to="partier">
+              <Link to="/partier">
                 <li className="hover:text-sky-400 active:text-sky-600">
                   Partier
                 </li>

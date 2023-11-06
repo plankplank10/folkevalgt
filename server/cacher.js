@@ -117,6 +117,35 @@ const cachePartier = async () => {
   console.log(`[Cacher] ${partier.length} Parties Cached`);
 };
 
+const cachePeriod = (period) => {
+  if (period == null || period == undefined) {
+    console.log("Period required");
+    return;
+  }
+
+  console.log("Caching all representatives in period '" + period + "'");
+
+  axios
+    .get(
+      `https://data.stortinget.no/eksport/representanter?format=json&stortingsperiodeid=${period}`
+    )
+    .then((response) => {
+      response.data.representanter_liste.forEach((el) => {
+        cachePerson(el.id);
+      });
+    });
+};
+
+const cacheAllPeriods = async () => {
+  let metadata = await CLIENT.db(MONGODB_DATABASE)
+    .collection("metadata")
+    .findOne();
+
+  metadata.stortingsperioder.forEach((periode) => {
+    cachePeriod(periode.id);
+  });
+};
+
 const cachePerson = (personId) => {
   if (personId == null || personId == undefined) {
     console.log("PersonID required");
@@ -300,8 +329,17 @@ const CACHES = [
     trigger: cacheDagensRepresentanter,
   },
   {
+    name: "period",
+    trigger: cachePeriod,
+  },
+  {
     name: "metadata",
     trigger: cacheMetadata,
+  },
+
+  {
+    name: "allPeriods",
+    trigger: cacheAllPeriods,
   },
   { name: "partier", trigger: cachePartier },
 ];

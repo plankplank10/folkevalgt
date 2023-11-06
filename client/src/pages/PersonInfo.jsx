@@ -1,8 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import "./PersonInfo.css";
-import Header from "../../components/header/Header";
+import Header from "../components/header/Header";
 
 export default function PersonInfo() {
   let { personId } = useParams();

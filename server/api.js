@@ -136,9 +136,38 @@ const handleMetadata = async (req, res) => {
   res.json(document);
 };
 
+const handleRegjering = async (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+
+  axios
+    .get("https://data.stortinget.no/eksport/regjering?format=json")
+    .then((response) => {
+      let list = [];
+
+      response.data.regjeringsmedlemmer_liste.forEach((el) => {
+        list.push({
+          _id: el.id,
+          fornavn: el.fornavn,
+          etternavn: el.etternavn,
+          departement: el.departement,
+          parti: {
+            _id: el.parti.id,
+            navn: el.parti.navn,
+          },
+          tittel: el.tittel,
+          verv: el.verv,
+          sortering: el.sortering,
+        });
+      });
+
+      res.json({ list: list });
+    });
+};
+
 module.exports = {
   handleRepresentativeList,
   handlePersonInfo,
   handleMetadata,
+  handleRegjering,
   passClient,
 };

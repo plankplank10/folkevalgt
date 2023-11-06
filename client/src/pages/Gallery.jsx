@@ -1,8 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
-import GalleryItem from "../../components/person/GalleryItem";
-import "./Gallery.css";
-import Header from "../../components/header/Header";
+import GalleryItem from "../components/person/GalleryItem";
+import Header from "../components/header/Header";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function Gallery() {
@@ -20,11 +19,12 @@ export default function Gallery() {
       data.representatives.forEach((element) => {
         gallery.push(
           <GalleryItem
-            key={element._id} // TODO Change to _id when using mongo
-            element={element}
-            avatarURL={element.avatarURL}
+            key={element._id}
+            personId={element._id}
+            // avatarURL={element.avatarURL}
             fornavn={element.fornavn}
             etternavn={element.etternavn}
+            parti={element.parti.id}
           ></GalleryItem>
         );
       });
@@ -32,11 +32,12 @@ export default function Gallery() {
       data.representatives.forEach((element) => {
         gallery.push(
           <GalleryItem
-            key={element._id} // TODO Change to _id when using mongo
-            element={element}
-            avatarURL={element.avatarURL}
+            key={element._id}
+            personId={element._id}
+            // avatarURL={element.avatarURL}
             fornavn={element.fornavn}
             etternavn={element.etternavn}
+            parti={element.parti.id}
           ></GalleryItem>
         );
       });
@@ -46,10 +47,6 @@ export default function Gallery() {
   };
 
   useEffect(() => {
-    console.log("RUNNING USEEFFECT");
-    console.log(`period: ${params.period}`);
-    console.log(params);
-
     fetch(
       "http://localhost:3001/api/representanter" +
         (params.period == undefined ? "" : "?period=" + params.period)
@@ -89,7 +86,7 @@ export default function Gallery() {
       <Header />
       <div className="container mx-auto">
         <select name="periods" onChange={handlePeriodChange} value={period}>
-          <option value="current">Nåværende Storting</option>
+          <option value="current">Dagens Storting</option>
           {options}
         </select>
         {personGallery ? personGallery : "Loading..."}

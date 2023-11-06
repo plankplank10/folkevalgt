@@ -1,9 +1,10 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
-import Gallery from "./pages/gallery/Gallery";
-import PersonInfo from "./pages/person-info/PersonInfo";
+import Gallery from "./pages/Gallery";
+import PersonInfo from "./pages/PersonInfo";
 import Header from "./components/header/Header";
 import { useEffect, useState } from "react";
+import Regjering from "./pages/Regjering";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/gallery/:period" element={<Gallery />}></Route>
           <Route path="/gallery/" element={<Gallery />}></Route>
           <Route path="/person/:personId" element={<PersonInfo />}></Route>
+          <Route path="/regjering/" element={<Regjering />}></Route>
           <Route
             path="*"
             element={

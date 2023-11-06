@@ -83,6 +83,8 @@ const startExpress = () => {
 
   app.get("/api/metadata", api.handleMetadata);
 
+  app.get("/api/regjering", api.handleRegjering);
+
   app.listen(PORT, () => {
     console.log(`[Express.js] Server listening on port ${PORT}`);
   });
